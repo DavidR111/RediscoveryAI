@@ -26,7 +26,8 @@ class TitleBar extends Component {
                     <Typography
                         className={classes.flexGrow}
                         align="left"
-                        variant="title"
+                        variant='h6'
+                        component='h6'
                         color="inherit"
                         noWrap
                     >

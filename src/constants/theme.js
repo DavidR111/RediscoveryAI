@@ -27,7 +27,7 @@ const styles = theme => ({
         }
     },
 
-    switcher: {
+    leftSideBar: {
         width: `${switcherWidth}px`,
         height: "100%",
         display: "flex",
@@ -35,10 +35,21 @@ const styles = theme => ({
         alignItems: "center",
         flexShrink: 0,
         flexGrow: 1,
-        padding: `${theme.spacing.unit * 2}px 0`,
+        padding: `${theme.spacing(2)}px 0`,
         backgroundColor: 'rgb(32,33,48)'
     },
-    switcherHeader: {
+    rightSideBar: {
+        width: `${switcherWidth * 6}px`,
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        flexShrink: 0,
+        flexGrow: 1,
+        padding: `${theme.spacing(2)}px 0`,
+        backgroundColor: 'rgb(32,33,48)'
+    },
+    leftSideBarHeader: {
         ...theme.mixins.toolbar
     },
     group: {
@@ -47,11 +58,11 @@ const styles = theme => ({
         justifyContent: "center",
         width: `${groupSize}px`,
         height: `${groupSize}px`,
-        marginBottom: `${theme.spacing.unit * 2}px`,
-        borderRadius: "10%",
+        marginBottom: `${theme.spacing(2)}px`,
+        borderRadius: "20%",
         color: "white",
         fontWeight: "bold",
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
+        backgroundColor: "rgba(150, 150, 150, 0.5)",
         cursor: "pointer",
         "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.5)"
@@ -78,7 +89,7 @@ const styles = theme => ({
         marginRight: 16
     },
     profileLogo: {
-        marginRight: `${theme.spacing.unit}px`
+        marginRight: `${theme.spacing(1)}px`
     },
     flexGrow: {
         flexGrow: 1
