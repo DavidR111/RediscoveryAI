@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import TitleBar from './components/TitleBar/TitleBar'
 import LeftSideBar from './components/SideBars/LeftSideBar'
 import RightSideBar from './components/SideBars/RightSideBar'
+import WorkSpace from './components/WorkSpace/WorkSpace'
 
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
@@ -16,8 +17,7 @@ class App extends Component {
         <div className={classes.appFrame}>
           <TitleBar />
           <LeftSideBar />
-          <main className={classes.content}>
-          </main>
+          <WorkSpace />
           <RightSideBar />
         </div>
       </div>

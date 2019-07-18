@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
-
-import { withStyles } from "@material-ui/core/styles"
+import React, { Component } from 'react'
 import { withStyles } from "@material-ui/core/styles"
 
-import styles from '../../constants/theme'
+import ActionToolBar from './ActionToolBar/ActionToolBar'
+import DrawBoard from './DrawBoard/DrawBoard'
+import ImgToolbar from './ImgToolBar/ImgToolBar'
+
+import styles from './theme'
 
 class WorkSpace extends Component {
     render() {
         const { classes } = this.props
         return (
             <main className={classes.content}>
+                <ActionToolBar />
+                <DrawBoard />
+                <ImgToolbar />
             </main>
         )
     }
