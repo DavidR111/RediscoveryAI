@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import imgReducer from './img.reducer'
+//import imgReducer from './img.reducer'
 import objectReducer from './object.reducer'
 
 const rootReducer = combineReducers({
-    imgState: imgReducer,
+    //imgState: imgReducer,
     objState: objectReducer
 })
 
