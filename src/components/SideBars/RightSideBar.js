@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import styles from '../../constants/theme'
+import styles from './theme'
 
 class RightSideBar extends Component {
     render() {

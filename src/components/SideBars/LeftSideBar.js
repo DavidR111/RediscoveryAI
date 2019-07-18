@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
-import styles from '../../constants/theme'
+import styles from './theme'
 
 const LeftSideBar = props => {
     const { classes } = props;

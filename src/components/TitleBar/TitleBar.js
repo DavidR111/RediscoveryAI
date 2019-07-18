@@ -6,7 +6,7 @@ import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
 import classNames from "classnames"
 
-import styles from '../../constants/theme'
+import styles from './theme'
 
 class TitleBar extends Component {
     render() {
@@ -54,7 +54,6 @@ class TitleBar extends Component {
         )
     }
 }
-
 
 TitleBar.propTypes = {
     classes: PropTypes.object.isRequired,
