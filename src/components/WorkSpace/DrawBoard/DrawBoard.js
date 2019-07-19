@@ -63,7 +63,7 @@ class DrawBoard extends Component {
                 .filter(function (rect) {
                     return rect.id === selectedIndex
                 })
-            //console.log(boundPoints)
+
             selectedRect.data(boundPoints).enter()
                 .append('rect')
                 .attr('x', (point) => (point.x - 5))
@@ -93,9 +93,9 @@ class DrawBoard extends Component {
     }
 
     /**
-     * DragStarted : Drag Event
+     * dragStarted : Drag Event
      */
-    dragstarted = (rect, index, element) => {
+    dragStarted = (rect, index, element) => {
         let { drawMode, setSelectedIndex } = this.props
         if (!drawMode || !rect.enable)
             return
@@ -142,7 +142,7 @@ class DrawBoard extends Component {
             .attr("transform", ("translate(" + (dx - offset.x) + "," + (dy - offset.y) + ")"))
     }
 
-    dragended = (rect, index, element) => {
+    dragEnded = (rect, index, element) => {
 
         let { drawMode, updateRect, setUpdateScreen } = this.props
         if (!drawMode || !rect.enable)
@@ -221,9 +221,9 @@ class DrawBoard extends Component {
         let { rectLists } = this.props
 
         let dragHandler = d3.drag()
-            .on('start', this.dragstarted)
+            .on('start', this.dragStarted)
             .on('drag', this.dragged)
-            .on('end', this.dragended)
+            .on('end', this.dragEnded)
 
         svgBoard.selectAll('g')
             .data(rectLists).enter()
