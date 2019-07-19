@@ -18,7 +18,7 @@ const objectReducer = handleActions({
     [types.PUSH_RECT]: (state, { payload: { rect } }) => {
         return {
             ...state,
-            rectLists: state.rectLists.concat({ ...rect }),
+            rectLists: state.rectLists.concat({ ...rect, id: state.idLimit }),
             idLimit: state.idLimit + 1
         }
     },

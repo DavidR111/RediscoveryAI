@@ -14,7 +14,7 @@ export const generateRect = (points) => {
         x1 = Math.min(x1, points[i].x)
         x2 = Math.max(x2, points[i].x)
         y1 = Math.min(y1, points[i].y)
-        y2 = Math.max(y2, points[i].y2)
+        y2 = Math.max(y2, points[i].y)
     }
     return { x1, y1, x2, y2 }
 }

@@ -27,7 +27,7 @@ const styles = theme => ({
     leftSideBarHeader: {
         ...theme.mixins.toolbar
     },
-    group: {
+    dots: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -39,6 +39,7 @@ const styles = theme => ({
         fontWeight: "bold",
         backgroundColor: "rgba(150, 150, 150, 0.5)",
         cursor: "pointer",
+        border: '0px',
         "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.5)"
         }

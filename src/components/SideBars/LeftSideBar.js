@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 import styles from './theme'
 
-const LeftSideBar = props => {
-    const { classes } = props;
+class LeftSideBar extends Component {
+    render() {
 
-    return (
-        <section className={classes.leftSideBar}>
-            <div className={classes.leftSideBarHeader} />
-            <div className={classes.group}>...</div>
-        </section>
-    )
+        const { classes } = this.props;
+        return (
+            <section className={classes.leftSideBar}>
+                <div className={classes.leftSideBarHeader} />
+                <button className={classes.dots} >...</button>
+            </section>
+        )
+    }
 }
 
 LeftSideBar.propTypes = {
