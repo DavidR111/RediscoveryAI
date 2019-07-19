@@ -15,15 +15,16 @@ import {
 	updateRect,
 	pushRect,
 	setRectEnable,
-	setUpdateScreen
+	setUpdateScreen,
+	setSelectedIndex
 } from './redux/actions/object.action'
 
 class App extends Component {
 	render() {
 		const { classes } = this.props
 
-		const { drawMode, rectLists, updateScreenParam } = this.props  // mapStateToProps
-		const { setMode, pushRect, updateRect, setRectEnable, setUpdateScreen } = this.props    // mapDispatchToProps
+		const { drawMode, rectLists, updateScreenParam, selectedIndex } = this.props  // mapStateToProps
+		const { setMode, pushRect, updateRect, setRectEnable, setUpdateScreen, setSelectedIndex } = this.props    // mapDispatchToProps
 
 		return (
 			<div className={classes.root} >
@@ -31,12 +32,15 @@ class App extends Component {
 					<TitleBar />
 					<LeftSideBar drawMode={drawMode} setMode={setMode} />
 					<WorkSpace
+						className={classes}
 						drawMode={drawMode}
 						rectLists={rectLists}
 						pushRect={pushRect}
 						updateRect={updateRect}
 						updateScreenParam={updateScreenParam}
-						setUpdateScreen={setUpdateScreen} />
+						setUpdateScreen={setUpdateScreen}
+						selectedIndex={selectedIndex}
+						setSelectedIndex={setSelectedIndex} />
 					<RightSideBar rectLists={rectLists} setRectEnable={setRectEnable} setUpdateScreen={setUpdateScreen} />
 				</div>
 			</div>
@@ -53,7 +57,8 @@ App.propTypes = {
 const mapStateToProps = state => ({
 	drawMode: state.objState.mode,
 	rectLists: state.objState.rectLists,
-	updateScreenParam: state.objState.updateScreenParam
+	updateScreenParam: state.objState.updateScreenParam,
+	selectedIndex: state.objState.selectedIndex
 })
 
 const mapDispatchToProps = {
@@ -61,7 +66,8 @@ const mapDispatchToProps = {
 	updateRect,
 	pushRect,
 	setRectEnable,
-	setUpdateScreen
+	setUpdateScreen,
+	setSelectedIndex
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)

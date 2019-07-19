@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AppBar, Button, Typography, Toolbar, IconButton } from '@material-ui/core'
-import MenuIcon from '@material-ui/icons/Menu'
+import { School } from '@material-ui/icons'
 
 import PropTypes from "prop-types"
 import { withStyles } from "@material-ui/core/styles"
@@ -20,7 +20,7 @@ class TitleBar extends Component {
                         onClick={toggleDrawer}
                         className={classNames(classes.menuButton)}
                     >
-                        <MenuIcon />
+                        <School />
                     </IconButton>
 
                     <Typography
@@ -33,22 +33,6 @@ class TitleBar extends Component {
                     >
                         Project Object Detectoin
                 </Typography>
-
-                    <div className={classes.subToolbar}>
-                        <Button color="primary" className={classes.button}>
-                            {"< PREVIOUS  "}
-                        </Button>
-
-                        <h5
-                            style={{ color: "grey", marginLeft: "25px", marginRight: "25px" }}
-                        >
-                            {"2007_000175.jpg [2/2]"}
-                        </h5>
-
-                        <Button color="primary" className={classes.button}>
-                            {"  NEXT >"}
-                        </Button>
-                    </div>
                 </Toolbar>
             </AppBar>
         )

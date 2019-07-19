@@ -8,21 +8,24 @@ const styles = theme => ({
         width: '100%',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: 0,
-        height: 'calc(100% - 56px)'
+        paddingTop: '64px',
+        paddingBottom: '0px',
+        height: 'calc(100%)'
     },
     DrawBoard: {
-        width: '100%',
+        width: 'calc(100vw - 420px)',
         flexGrow: 1,
         backgroundColor: 'rgb(18,17,28)',
-        padding: '20px',
-        height: 'calc(100% - 112px)'
-    },
-    imgToolbar: {
-        zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: 'rgb(32,33,48)',
-        height: '90px',
-        borderRight: '1px solid'
+        //padding: '20px',
+        height: 'calc(100vh - 64px)',
+
+        backgroundImage: 'url(https://source.unsplash.com/user/erondu)',
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+        maxWidth: '2000px',
+        padding: '0'
     }
 });
 

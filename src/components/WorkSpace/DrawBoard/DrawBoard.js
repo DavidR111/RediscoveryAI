@@ -8,17 +8,18 @@ import * as d3 from 'd3'
 import styles from '../theme'
 import {
     clientAreaPos,
-    generateRect
+    generateRect,
+    getBoundPoints
 } from '../../../constants/functions'
 
 class DrawBoard extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
             svgBoard: null,
             sizeControl: false,
             drawPoints: [],
-            selectedBoundPoints: [],
             offset: null
         }
     }
@@ -42,7 +43,7 @@ class DrawBoard extends Component {
     componentDidUpdate() {
 
         const { svgBoard, drawPoints } = this.state
-        const { updateScreenParam, setUpdateScreen } = this.props
+        const { updateScreenParam, setUpdateScreen, drawMode, setSelectedIndex, selectedIndex, rectLists } = this.props
 
         svgBoard.selectAll('g')
             .data(drawPoints).enter()
@@ -54,6 +55,30 @@ class DrawBoard extends Component {
             .attr('fill', 'green')
             .attr('id', 'DRAWPOINTS')
 
+        if (selectedIndex >= 0) {
+            this.eraseBoundPoints()
+            let rect = rectLists.filter((rect) => (rect.id === selectedIndex))
+            let boundPoints = getBoundPoints(rect[0])
+            let selectedRect = svgBoard.selectAll('g')
+                .filter(function (rect) {
+                    return rect.id === selectedIndex
+                })
+            //console.log(boundPoints)
+            selectedRect.data(boundPoints).enter()
+                .append('rect')
+                .attr('x', (point) => (point.x - 5))
+                .attr('y', (point) => (point.y - 5))
+                .attr('width', 10)
+                .attr('height', 10)
+                .attr('fill', 'green')
+                .attr('id', 'BOUNDPOINTS')
+
+        }
+
+        if (!drawMode) {
+            this.eraseBoundPoints()
+            setSelectedIndex({ index: -1 })
+        }
 
         if (drawPoints.length === 4) {
             this.setState({ drawPoints: [] })
@@ -71,7 +96,7 @@ class DrawBoard extends Component {
      * DragStarted : Drag Event
      */
     dragstarted = (rect, index, element) => {
-        let { drawMode } = this.props
+        let { drawMode, setSelectedIndex } = this.props
         if (!drawMode || !rect.enable)
             return
 
@@ -79,9 +104,17 @@ class DrawBoard extends Component {
         let dx = d3.event.sourceEvent.offsetX,
             dy = d3.event.sourceEvent.offsetY
 
-        d3.select(element[index]).raise().style('cursor', 'move');
+        d3.select(element[index]).raise().style('cursor', 'move')
 
         offset = { x: (dx), y: (dy) }
+
+        setSelectedIndex({ index: rect.id })
+
+        /*        const selectedBoundPoints = getBoundPoints(rect)
+                this.setState({
+                    selectedBoundPoints: selectedBoundPoints
+                })*/
+
         this.setState({
             offset
         })
@@ -90,14 +123,22 @@ class DrawBoard extends Component {
     dragged = (rect, index, element) => {
 
         let { drawMode } = this.props
+        const { svgBoard } = this.state
         if (!drawMode || !rect.enable)
             return
-
         const { offset } = this.state
+
+        this.eraseBoundPoints()
+
         let dx = d3.event.sourceEvent.offsetX,
             dy = d3.event.sourceEvent.offsetY
+
         d3.select(element[index]).raise().style('cursor', 'normal')
+
         d3.select(element[index])
+            .attr("transform", ("translate(" + (dx - offset.x) + "," + (dy - offset.y) + ")"))
+
+        svgBoard.selectAll('#BOUNTPOINTS')
             .attr("transform", ("translate(" + (dx - offset.x) + "," + (dy - offset.y) + ")"))
     }
 
@@ -111,6 +152,7 @@ class DrawBoard extends Component {
         d3.select(element[index]).raise().style('cursor', 'normal')
         let dx = d3.event.sourceEvent.offsetX,
             dy = d3.event.sourceEvent.offsetY
+
         d3.select(element[index])
             .attr("x", (dx - offset.x + rect.x1))
             .attr("y", (dy - offset.y + rect.y1))
@@ -127,6 +169,7 @@ class DrawBoard extends Component {
                 enable: true
             })
 
+        this.eraseBoundPoints()
         setUpdateScreen({ value: true })
 
         this.setState({
@@ -159,7 +202,7 @@ class DrawBoard extends Component {
             .attr('width', 80)
             .attr('height', 20)
             .attr('rx', '5')
-            .attr('fill', 'rgb(67,176,101)');
+            .attr('fill', (rectPos) => (rectPos.enable ? 'rgb(67,176,101)' : 'grey'));
 
         selection.append("text")
             .attr("x", (rectPos) => (rectPos.x1 + 5))
@@ -192,6 +235,11 @@ class DrawBoard extends Component {
     eraseDrawPoints = () => {
         const { svgBoard } = this.state
         svgBoard.selectAll('#DRAWPOINTS').remove()
+    }
+
+    eraseBoundPoints = () => {
+        const { svgBoard } = this.state
+        svgBoard.selectAll('#BOUNDPOINTS').remove()
     }
 
     updateScreen = () => {

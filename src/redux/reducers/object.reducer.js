@@ -51,6 +51,12 @@ const objectReducer = handleActions({
             ...state,
             updateScreenParam: update.value
         }
+    },
+    [types.SET_SELECTED_INDEX]: (state, { payload: { data } }) => {
+        return {
+            ...state,
+            selectedIndex: data.index
+        }
     }
 }, initialState)
 
