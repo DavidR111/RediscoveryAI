@@ -5,7 +5,8 @@ const initialState = {
     mode: false,
     rectLists: [],
     selectedIndex: -1,
-    idLimit: 0
+    idLimit: 0,
+    updateScreenParam: false
 }
 
 const objectReducer = handleActions({
@@ -43,6 +44,12 @@ const objectReducer = handleActions({
         return {
             ...state,
             rectLists
+        }
+    },
+    [types.SET_UPDATE_SCREEN]: (state, { payload: { update } }) => {
+        return {
+            ...state,
+            updateScreenParam: update.value
         }
     }
 }, initialState)

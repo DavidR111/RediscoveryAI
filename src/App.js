@@ -14,15 +14,16 @@ import {
 	setMode,
 	updateRect,
 	pushRect,
-	setRectEnable
+	setRectEnable,
+	setUpdateScreen
 } from './redux/actions/object.action'
 
 class App extends Component {
 	render() {
 		const { classes } = this.props
 
-		const { drawMode, rectLists } = this.props  // mapStateToProps
-		const { setMode, pushRect, updateRect, setRectEnable } = this.props    // mapDispatchToProps
+		const { drawMode, rectLists, updateScreenParam } = this.props  // mapStateToProps
+		const { setMode, pushRect, updateRect, setRectEnable, setUpdateScreen } = this.props    // mapDispatchToProps
 
 		return (
 			<div className={classes.root} >
@@ -33,8 +34,10 @@ class App extends Component {
 						drawMode={drawMode}
 						rectLists={rectLists}
 						pushRect={pushRect}
-						updateRect={updateRect} />
-					<RightSideBar rectLists={rectLists} setRectEnable={setRectEnable} />
+						updateRect={updateRect}
+						updateScreenParam={updateScreenParam}
+						setUpdateScreen={setUpdateScreen} />
+					<RightSideBar rectLists={rectLists} setRectEnable={setRectEnable} setUpdateScreen={setUpdateScreen} />
 				</div>
 			</div>
 		)
@@ -49,14 +52,16 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
 	drawMode: state.objState.mode,
-	rectLists: state.objState.rectLists
+	rectLists: state.objState.rectLists,
+	updateScreenParam: state.objState.updateScreenParam
 })
 
 const mapDispatchToProps = {
 	setMode,
 	updateRect,
 	pushRect,
-	setRectEnable
+	setRectEnable,
+	setUpdateScreen
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)

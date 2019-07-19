@@ -18,3 +18,18 @@ export const generateRect = (points) => {
     }
     return { x1, y1, x2, y2 }
 }
+
+export const boundPoints = (rect) => {
+    let pts = []
+    let width = rect.x2 - rect.x1
+    let height = rect.y2 - rect.y1
+
+    for (let i = 0; i <= 2; ++i) {
+        for (let j = 0; j <= 2; ++j) {
+            if (i === 1 && j === 1) {
+                continue
+            }
+            pts.push({ x: width * i, y: height * j })
+        }
+    }
+}

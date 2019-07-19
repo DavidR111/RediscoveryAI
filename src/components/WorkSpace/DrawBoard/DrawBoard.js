@@ -18,6 +18,7 @@ class DrawBoard extends Component {
             svgBoard: null,
             sizeControl: false,
             drawPoints: [],
+            selectedBoundPoints: [],
             offset: null
         }
     }
@@ -41,6 +42,7 @@ class DrawBoard extends Component {
     componentDidUpdate() {
 
         const { svgBoard, drawPoints } = this.state
+        const { updateScreenParam, setUpdateScreen } = this.props
 
         svgBoard.selectAll('g')
             .data(drawPoints).enter()
@@ -57,8 +59,11 @@ class DrawBoard extends Component {
             this.setState({ drawPoints: [] })
             this.eraseDrawPoints()
         }
+        if (updateScreenParam) {
+            this.updateScreen()
+            setUpdateScreen({ value: false })
+        }
 
-//        this.updateScreen()
         this.drawRects()
     }
 
@@ -98,7 +103,7 @@ class DrawBoard extends Component {
 
     dragended = (rect, index, element) => {
 
-        let { drawMode, updateRect } = this.props
+        let { drawMode, updateRect, setUpdateScreen } = this.props
         if (!drawMode || !rect.enable)
             return
 
@@ -120,9 +125,9 @@ class DrawBoard extends Component {
                 x2: (dx - offset.x + rect.x2),
                 y2: (dy - offset.y + rect.y2),
                 enable: true
-            });
-        this.updateScreen()
-        this.drawRects()
+            })
+
+        setUpdateScreen({ value: true })
 
         this.setState({
             offset: { x: 0, y: 0 },
@@ -200,7 +205,6 @@ class DrawBoard extends Component {
      */
     appendDrawPoints = (pt) => {
         let { drawPoints } = this.state
-        //console.log(drawPoints)
 
         if (drawPoints.length < 4) {
             this.updateScreen()

@@ -18,8 +18,9 @@ class RightSideBar extends Component {
     }
 
     handleRectEnable = (id, enable) => {
-        const { setRectEnable } = this.props
+        const { setRectEnable, setUpdateScreen } = this.props
         setRectEnable({ id: id, enable: !enable })
+        setUpdateScreen({ value: true })
     }
 
     render() {
