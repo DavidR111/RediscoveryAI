@@ -61,9 +61,8 @@ const styles = theme => ({
         color: 'grey'
     },
     objectList: {
-        height: '150px',
-        maxHeight: '150px',
-        overflow: 'auto'
+        overflow: 'auto',
+        height: 'calc(100vh - 100px)'
     }
 });
 
