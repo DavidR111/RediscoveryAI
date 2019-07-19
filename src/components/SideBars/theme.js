@@ -37,12 +37,33 @@ const styles = theme => ({
         borderRadius: "20%",
         color: "white",
         fontWeight: "bold",
-        backgroundColor: "rgba(150, 150, 150, 0.5)",
+        backgroundColor: "rgba(250, 250, 250, 0.8)",
         cursor: "pointer",
         border: '0px',
         "&:hover": {
-            backgroundColor: "rgba(0, 0, 0, 0.5)"
+            backgroundColor: "rgba(180, 180, 180, 0.5)"
         }
+    },
+    dotsClicked: {
+        backgroundColor: "rgba(120, 120, 120, 0.5)",
+        color: 'white'
+    },
+    listBar: {
+        width: '100%',
+        maxWidth: 360,
+        backgroundColor: 'rgb(32,33,48)',
+        color: 'white'
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+    },
+    listIcon: {
+        color: 'grey'
+    },
+    objectList: {
+        height: '150px',
+        maxHeight: '150px',
+        overflow: 'auto'
     }
 });
 

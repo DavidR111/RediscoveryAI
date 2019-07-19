@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import * as d3 from 'd3'
-
-import { pushRect } from '../../../redux/actions/object.action'
 
 import styles from '../theme'
 import {
@@ -62,46 +58,74 @@ class DrawBoard extends Component {
             this.eraseDrawPoints()
         }
 
+//        this.updateScreen()
         this.drawRects()
     }
 
     /**
      * DragStarted : Drag Event
      */
-    dragstarted = (shape, index, element) => {
-        let { offset } = this.state
-        //d3.select(element[index]).raise().style('cursor', 'move');
-        let dx = d3.event.sourceEvent.offsetX, dy = d3.event.sourceEvent.offsetY
-        //console.log('started');
-        offset = { x: (dx - shape[0].x), y: (dy - shape[0].y) }
+    dragstarted = (rect, index, element) => {
+        let { drawMode } = this.props
+        if (!drawMode || !rect.enable)
+            return
 
+        let { offset } = this.state
+        let dx = d3.event.sourceEvent.offsetX,
+            dy = d3.event.sourceEvent.offsetY
+
+        d3.select(element[index]).raise().style('cursor', 'move');
+
+        offset = { x: (dx), y: (dy) }
         this.setState({
             offset
         })
     }
 
-    dragged = (shape, index, element) => {
+    dragged = (rect, index, element) => {
+
+        let { drawMode } = this.props
+        if (!drawMode || !rect.enable)
+            return
+
         const { offset } = this.state
-        let dx = d3.event.sourceEvent.offsetX, dy = d3.event.sourceEvent.offsetY;
-
-        console.log(index)
-
+        let dx = d3.event.sourceEvent.offsetX,
+            dy = d3.event.sourceEvent.offsetY
+        d3.select(element[index]).raise().style('cursor', 'normal')
         d3.select(element[index])
             .attr("transform", ("translate(" + (dx - offset.x) + "," + (dy - offset.y) + ")"))
     }
 
-    dragended = (shape, index, element) => {
+    dragended = (rect, index, element) => {
+
+        let { drawMode, updateRect } = this.props
+        if (!drawMode || !rect.enable)
+            return
+
         const { offset } = this.state
         d3.select(element[index]).raise().style('cursor', 'normal')
-        let dx = d3.event.sourceEvent.offsetX, dy = d3.event.sourceEvent.offsetY
-        //console.log('drag end', index);
-        /*        this.props.updateRect(index,
-                    [{ x: (dx - moveOffset.x), y: (dy - moveOffset.y) },
-                    { x: (dx - moveOffset.x + shape[1].x - shape[0].x), y: (dy - moveOffset.y + shape[1].y - shape[0].y) }]);*/
+        let dx = d3.event.sourceEvent.offsetX,
+            dy = d3.event.sourceEvent.offsetY
+        d3.select(element[index])
+            .attr("x", (dx - offset.x + rect.x1))
+            .attr("y", (dy - offset.y + rect.y1))
+            .attr("width", (rect.x2 - rect.x1))
+            .attr("height", (rect.y2 - rect.y1))
+
+        updateRect(
+            {
+                id: rect.id,
+                x1: (dx - offset.x + rect.x1),
+                y1: (dy - offset.y + rect.y1),
+                x2: (dx - offset.x + rect.x2),
+                y2: (dy - offset.y + rect.y2),
+                enable: true
+            });
+        this.updateScreen()
         this.drawRects()
 
         this.setState({
-            moveOffset: null,
+            offset: { x: 0, y: 0 },
         })
     }
 
@@ -113,7 +137,7 @@ class DrawBoard extends Component {
             .attr('width', (rectPos) => (rectPos.x2 - rectPos.x1))
             .attr('height', (rectPos) => (rectPos.y2 - rectPos.y1))
             .attr('stroke-width', 2)
-            .attr('stroke', 'rgb(67,176,101)')
+            .attr('stroke', (rectPos) => (rectPos.enable ? 'rgb(67,176,101)' : 'grey'))
             .attr('stroke-dasharray', "5,5")
             .attr('fill', 'rgba(255,255,255,0)')
 
@@ -145,13 +169,19 @@ class DrawBoard extends Component {
      */
 
     drawRects = () => {
-        let { rectLists } = this.props
         const { svgBoard } = this.state
+        let { rectLists } = this.props
+
+        let dragHandler = d3.drag()
+            .on('start', this.dragstarted)
+            .on('drag', this.dragged)
+            .on('end', this.dragended)
 
         svgBoard.selectAll('g')
             .data(rectLists).enter()
             .append('g')
             .call(this.drawOneRect)
+            .call(dragHandler)
     }
 
     eraseDrawPoints = () => {
@@ -217,15 +247,4 @@ DrawBoard.propTypes = {
     classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
-    drawMode: state.objState.mode,
-    rectLists: state.objState.rectLists
-})
-
-const mapDispatchToProps = {
-    pushRect
-}
-
-const withConnect = connect(mapStateToProps, mapDispatchToProps)
-
-export default withStyles(styles, { withTheme: true })(compose(withConnect)(DrawBoard))
+export default withStyles(styles, { withTheme: true })(DrawBoard)

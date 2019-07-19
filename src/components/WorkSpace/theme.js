@@ -5,22 +5,18 @@ const styles = theme => ({
         height: '40px'
     },
     content: {
-        width: "100%",
+        width: '100%',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: 0,
-        height: "calc(100% - 56px)",
-        [theme.breakpoints.up("sm")]: {
-            height: "calc(100% - 64px)",
-            marginTop: 64
-        }
+        height: 'calc(100% - 56px)'
     },
     DrawBoard: {
         width: '100%',
         flexGrow: 1,
         backgroundColor: 'rgb(18,17,28)',
-        padding: 0,
-        height: "calc(100% - 130px)"
+        padding: '20px',
+        height: 'calc(100% - 112px)'
     },
     imgToolbar: {
         zIndex: theme.zIndex.drawer + 1,

@@ -10,10 +10,16 @@ import styles from './theme'
 class WorkSpace extends Component {
     render() {
         const { classes } = this.props
+        const { drawMode, rectLists } = this.props
+        const { pushRect, updateRect } = this.props
         return (
             <main className={classes.content}>
                 <ActionToolBar />
-                <DrawBoard />
+                <DrawBoard
+                    drawMode={drawMode}
+                    rectLists={rectLists}
+                    pushRect={pushRect}
+                    updateRect={updateRect} />
                 <ImgToolbar />
             </main>
         )
